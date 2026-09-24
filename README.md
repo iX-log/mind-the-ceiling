@@ -53,6 +53,12 @@ Conditions, caveats, and raw data: [RESULTS.md](RESULTS.md).
 
 ![Bar chart of disk size against a line of aggregate WER across fp16, int8, and int4, showing int8 barely raises error while int4 raises it 2.6x for a further 2x size reduction](results/charts/quantization-tradeoff.png)
 
+![Horizontal bar chart comparing three iPhones. Blue bars show physical memory as each device reports it: 5.91 GB on the iPhone 14 Pro Max, 8.01 GB on the iPhone 16 Pro, 12.26 GB on the iPhone 17 Pro Max. Orange bars show the memory the app gets before jetsam kills it: 3,221,225,472 bytes on the A16, and the identical 3,539,992,576 bytes on both the A18 Pro and the A19 Pro. The blue bars grow steadily while the two newer orange bars are exactly the same length.](results/charts/ceiling-vs-ram.png)
+
+![Grouped bar chart across fp16, int8 and int4 on the iPhone 17 Pro Max. Blue bars, size on disk, descend from 39.4 MB to 19.8 MB to 10.0 MB. Orange bars, memory at first load, do not follow: 51.8 MB for fp16, 34.1 MB for int8, and 66.0 MB for int4. The smallest file has the largest resident cost.](results/charts/quantization-memory.png)
+
+![Range chart of 100 inference runs in each of two conditions on the iPhone 17 Pro Max. Normal mode spans 26.0 to 27.3 ms, a spread of 1.3 ms, with the median at 26.2 and the p95 marker hidden behind it. Low Power Mode spans 39.5 to 60.9 ms, a spread of 21.4 ms, with the median at 50.9 and p95 at 56.8. The Low Power line is roughly sixteen times longer.](results/charts/low-power-spread.png)
+
 ## Limitations
 
 - Core ML only, encoder only: no comparison to ONNX Runtime, TFLite, or whisper.cpp, and no end-to-end on-device transcription number (the decoder ran on a Mac CPU throughout).
