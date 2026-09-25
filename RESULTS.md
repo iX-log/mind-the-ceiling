@@ -395,6 +395,11 @@ both times. The variance was in the *reported* thermal state, not in the
 hardware's actual behavior. `thermalState` is a poor predictor of actual
 throttling and shouldn't be used to anticipate performance.
 
+Correction (session 12): the direction of the error is not consistent
+either. Here the transition landed on the cliff; on the A18 Pro it came
+8 s after the slowdown had started, and on the cooled A19 it came 147 s
+before. See session 12's table.
+
 Secondary observations:
 
 - The on-power run shows two plateaus: ~46ms for about four minutes, then
@@ -693,6 +698,10 @@ before any latency change at all and carried no signal. So on this
 device the API is a lagging confirmation of throttling that has already
 happened, not a warning that it is coming. An app that waits for
 `serious` before shedding work has already paid most of the cost.
+
+Correction (session 12): "lagging" is this device's behaviour, not a
+general one. Measured across all seven sustained runs, the transition is
+early more often than it is late. See session 12.
 
 ![Scatter of 14,155 inference latencies over 600 seconds on the iPhone 16 Pro with a rolling median overlaid. The median holds flat at 36.8 ms until about 83 seconds, rises sharply to about 40 ms by 120 seconds, stays near 40.5 ms until roughly 200 seconds, then climbs steadily and close to linearly to 47.4 ms at the end. Dashed vertical lines mark the thermal transitions: fair at 46 seconds, in the middle of the flat stretch, and serious at 91 seconds, partway up the step rather than at its start.](results/charts/sustained-fp16-1790161164.png)
 
@@ -1150,6 +1159,57 @@ does not appear to hold for quantized variants.
 Single device. Confirming it needs a cold page cache per precision, which
 means a reboot or reinstall before each one. Until that is done, treat
 this as one device's result.
+
+### thermalState does not reliably mark the slowdown
+
+Steepest point of the rolling-median rise against the nearest thermal
+transition, every sustained run in this document:
+
+| Run | Device | Steepest rise | Nearest transition | Offset |
+|---|---|---|---|---|
+| sustained-1788785293 | A16 | 102.2 s | fair at 102 s | coincident |
+| sustained-1788866056 | A16 | 104.8 s | serious at 101 s | 4 s early |
+| sustained-fp16-1790178261 | A16 | 107.3 s | fair at 88 s | 19 s early |
+| sustained-fp16-1790151796 | A19 | 361.9 s | fair at 215 s | 147 s early |
+| sustained-fp16-1790161164 | A18 Pro | 82.9 s | serious at 91 s | 8 s late |
+| sustained-fp16-1790174217 | A19 Pro | 298.8 s | fair at 344 s | 45 s late |
+
+The warm-start A19 run is excluded: it began already at `fair`, so there
+is no transition to compare against.
+
+Finding, correcting session 11: `thermalState` is not a lagging
+indicator. It is an unreliable one. Across six comparable runs it is
+early four times, late twice and coincident once, with offsets from 147
+seconds early to 45 seconds late, and no pattern by device or by which
+state was reported. Session 11 concluded "reports late" from the A18 Pro
+alone, which is exactly the single-device generalisation this document
+keeps finding.
+
+What the data supports is narrower and still useful: no transition in
+any run marks the onset of throttling closely enough to trigger on, in
+either direction.
+
+### Scoreboard: which published findings survived other hardware
+
+Every claim this document made before sessions 11 and 12, tested against
+at least one device that did not produce it.
+
+| Finding | First stated | Outcome |
+|---|---|---|
+| Degradation is a cliff | Session 8 | Broke. Three shapes across four devices |
+| Jetsam limit is half of device RAM | Session 9 | Broke. 54.49% of the A16's reported memory |
+| The limit scales with RAM | Session 9 | Broke. 8GB and 12GB return the same integer |
+| The limit is a per-device constant | Session 11 | Broke. Two devices share one |
+| Low Power Mode costs +56% | Session 3 | Broke. +94% on the A19 Pro |
+| File size overstates memory cost | Session 2 | Broke for quantized. int4 cost 6.6x its file |
+| `thermalState` timing is predictable | Sessions 8, 11 | Broke. Early four runs, late two, coincident one |
+| int4 buys ~3% on latency | Session 5 | Held. 3.1% A16, 2.7% A18 Pro |
+| Synthetic input is valid for timing | Session 6 | Held. Replicated on two devices, all precisions |
+| Core ML output is deterministic | Session 12 | Held. Bit-identical across two chips |
+
+Seven of the ten broke. Every one of the seven had been written here as a
+property of iOS or of Core ML, and every one turned out to be a property
+of the device it was measured on.
 
 ### Caveats
 
