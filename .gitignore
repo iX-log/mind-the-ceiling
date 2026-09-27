@@ -11,10 +11,12 @@ xcuserdata/
 *.xcuserstate
 DerivedData/
 .build/
+# moved to the private iX-log/writing repo; kept here as guards
 CFP.md
 cfp/
 NOTES.md
 WRITING.md
+IDEAS.md
 results/device-pull/ceiling-progress.json
 
 # A18 Pro encoder feature dumps (session 11), 62MB, held out of git until
