@@ -12,6 +12,7 @@ xcuserdata/
 DerivedData/
 .build/
 CFP.md
+cfp/
 NOTES.md
 WRITING.md
 results/device-pull/ceiling-progress.json
@@ -20,3 +21,5 @@ results/device-pull/ceiling-progress.json
 # the A16 control run decides whether they back a finding. If they do, they
 # belong in a release asset alongside the models, not in the repository.
 results/device-pull/iphone16pro-a18pro/
+results/device-pull/iphone17promax-a19pro/
+results/device-pull/a16-newbuild/
