@@ -3,7 +3,7 @@
 # and place them where both the Python side and Xcode expect them.
 set -euo pipefail
 
-REPO="iX-log/on-device-bench"
+REPO="iX-log/mind-the-ceiling"
 TAG="v0.1-models"
 ASSET="whisper-base-encoder-models.zip"
 URL="https://github.com/${REPO}/releases/download/${TAG}/${ASSET}"

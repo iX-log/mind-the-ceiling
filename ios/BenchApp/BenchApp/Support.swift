@@ -69,7 +69,7 @@ enum NetworkCheck {
 	static func anyInterfaceAvailable() async -> Bool {
 		await withCheckedContinuation { continuation in
 			let monitor = NWPathMonitor()
-			let queue = DispatchQueue(label: "on-device-bench.network-check")
+			let queue = DispatchQueue(label: "mind-the-ceiling.network-check")
 			var resumed = false
 			monitor.pathUpdateHandler = { path in
 				guard !resumed else { return }
