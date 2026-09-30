@@ -18,11 +18,13 @@ levels, using the Whisper-base encoder as the running example.
 
 
 <details>
-<summary><strong>Huh? ELI5, please</strong></summary><br>
-The phone hands your app a fixed slice of memory and ends the process if you
-cross the line, and the same work gets slower the longer you keep doing it.
-None of that is written on the box, so this measures it on real phones, one
-variable at a time.
+<summary><strong>Huh? ELI5, please</strong></summary>
+
+* Your app only gets a limited amount of memory.
+  * Use too much and iOS kills it.
+  * Run the same AI model for long enough and it can also start slowing down.
+
+* This project measures both on real iPhones so you know what to expect.
 
 </details>
 
