@@ -128,7 +128,8 @@ What to do about each of these: [ADVICE.md](ADVICE.md).
 
 </details>
 
-## Where to look next
+<details>
+<summary><b>Where to look next</b></summary>
 
 | File | What's in it |
 |---|---|
@@ -144,6 +145,8 @@ magnitude here as a starting point for your own measurement, not a constant.
 
 If a number doesn't reproduce on your run, please open an issue with your
 conditions and output.
+
+</details>
 
 ## License
 
