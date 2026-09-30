@@ -148,11 +148,18 @@ conditions and output.
 
 </details>
 
+<details>
+<summary>
+
 ## License
+
+</summary>
 
 Code is [MIT](LICENSE). Measurement data under `results/` (raw JSON, charts,
 screenshots) is [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/):
 cite this repo if you use the numbers.
+
+</details>
 
 ## Author
 
