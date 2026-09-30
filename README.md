@@ -13,10 +13,6 @@ Before you put an AI model on an iPhone, you want to know:
 This repo answers all four, measured on physical hardware, across quantization
 levels, using the Whisper-base encoder as the running example.
 
-[![License: MIT](https://img.shields.io/badge/code-MIT-blue.svg)](LICENSE)
-[![Data: CC BY 4.0](https://img.shields.io/badge/data-CC--BY--4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
-[![Platform: Core ML / iOS](https://img.shields.io/badge/platform-Core%20ML%20%2F%20iOS-black.svg)](REPRODUCING.md)
-
 <details>
 <summary><strong>Huh? ELI5, please</strong></summary>
 The phone hands your app a fixed slice of memory and ends the process if you
@@ -155,6 +151,10 @@ conditions and output.
 Code is [MIT](LICENSE). Measurement data under `results/` (raw JSON, charts,
 screenshots) is [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/):
 cite this repo if you use the numbers.
+
+[![License: MIT](https://img.shields.io/badge/code-MIT-blue.svg)](LICENSE)
+[![Data: CC BY 4.0](https://img.shields.io/badge/data-CC--BY--4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![Platform: Core ML / iOS](https://img.shields.io/badge/platform-Core%20ML%20%2F%20iOS-black.svg)](REPRODUCING.md)
 
 </details>
 
