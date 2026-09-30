@@ -17,14 +17,18 @@ levels, using the Whisper-base encoder as the running example.
 [![Data: CC BY 4.0](https://img.shields.io/badge/data-CC--BY--4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![Platform: Core ML / iOS](https://img.shields.io/badge/platform-Core%20ML%20%2F%20iOS-black.svg)](REPRODUCING.md)
 
-## Explain it like I'm five
+<details>
+<summary><b>Huh? ELI5, please</b></summary>
 
 The phone hands your app a fixed slice of memory and ends the process if you
 cross the line, and the same work gets slower the longer you keep doing it.
 None of that is written on the box, so this measures it on real phones, one
 variable at a time.
 
-## The app
+</details>
+
+<details>
+<summary><b>The app</b></summary>
 
 A small SwiftUI app you build and run on a physical device. The simulator has
 no Neural Engine, so latency and thermal numbers do not reproduce there.
@@ -40,7 +44,10 @@ no Neural Engine, so latency and thermal numbers do not reproduce there.
 
 ![The same app after a finished ten-minute run: 21,885 inferences over 600 seconds, a median of 27.5 ms, first minute 26.2 ms against last minute 28.0 ms for a drift of +1.8 ms, the thermal state moving from nominal to fair at 344.4 seconds, and the filename it wrote. Above that, the result of the last memory ceiling probe: 105 blocks allocated, 3375.7 MB of footprint, 0.3 MB left.](results/screenshots/iphone17promax-sustained-summary.png)
 
-## Run the app
+</details>
+
+<details>
+<summary><b>Run the app</b></summary>
 
 No Python needed: `fetch-models.sh` pulls the three converted models from this
 repo's release and puts them where Xcode expects them.
@@ -55,6 +62,8 @@ open ios/BenchApp/BenchApp.xcodeproj
 Pick a physical device in Xcode and run. Airplane mode, off charger, and let
 the phone cool first, or the first minute of any run measures the last thing
 you did rather than this one.
+
+</details>
 
 <details>
 <summary><b>Reproduce the published numbers</b>: nine steps, and a Python environment</summary>
