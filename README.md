@@ -18,8 +18,7 @@ levels, using the Whisper-base encoder as the running example.
 [![Platform: Core ML / iOS](https://img.shields.io/badge/platform-Core%20ML%20%2F%20iOS-black.svg)](REPRODUCING.md)
 
 <details>
-<summary><b>Huh? ELI5, please</b></summary>
-
+<summary><strong>Huh? ELI5, please</strong></summary>
 The phone hands your app a fixed slice of memory and ends the process if you
 cross the line, and the same work gets slower the longer you keep doing it.
 None of that is written on the box, so this measures it on real phones, one
@@ -28,7 +27,8 @@ variable at a time.
 </details>
 
 <details>
-<summary><b>The app</b></summary>
+
+<summary><strong>The app</strong></summary>
 
 A small SwiftUI app you build and run on a physical device. The simulator has
 no Neural Engine, so latency and thermal numbers do not reproduce there.
@@ -47,7 +47,8 @@ no Neural Engine, so latency and thermal numbers do not reproduce there.
 </details>
 
 <details>
-<summary><b>Run the app</b></summary>
+
+<summary><strong>Run the app</strong></summary>
 
 No Python needed: `fetch-models.sh` pulls the three converted models from this
 repo's release and puts them where Xcode expects them.
@@ -66,7 +67,7 @@ you did rather than this one.
 </details>
 
 <details>
-<summary><b>Reproduce the published numbers</b>: nine steps, and a Python environment</summary>
+<summary><strong>Reproduce the published numbers</strong></summary>
 
 Converting the models yourself, scoring accuracy and regenerating the charts
 needs the Python side. Every command and its expected output is in
@@ -85,7 +86,7 @@ needs the Python side. Every command and its expected output is in
 </details>
 
 <details>
-<summary><b>What we found</b>: eight measurements, and the session each came from</summary>
+<summary><strong>What we found</strong></summary>
 
 | Measurement | Result | Session |
 |---|---|---|
@@ -104,7 +105,7 @@ What to do about each of these: [ADVICE.md](ADVICE.md).
 </details>
 
 <details>
-<summary><b>Charts</b>: five figures, all regenerated from the committed data</summary>
+<summary><strong>Charts</strong></summary>
 
 **The memory ceiling does not scale with RAM.** Two phones 4GB apart are cut off at the same byte.
 
@@ -129,7 +130,7 @@ What to do about each of these: [ADVICE.md](ADVICE.md).
 </details>
 
 <details>
-<summary><b>Where to look next</b></summary>
+<summary><strong>Where to look next</strong></summary>
 
 | File | What's in it |
 |---|---|
@@ -149,11 +150,7 @@ conditions and output.
 </details>
 
 <details>
-<summary>
-
-## License
-
-</summary>
+<summary><strong>License</strong></summary>
 
 Code is [MIT](LICENSE). Measurement data under `results/` (raw JSON, charts,
 screenshots) is [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/):
@@ -161,6 +158,10 @@ cite this repo if you use the numbers.
 
 </details>
 
-## Author
+<details>
+
+<summary><strong>Author</strong></summary>
 
 Ixhen Hasani, [ix-dev.com](https://ix-dev.com)
+
+</details>
