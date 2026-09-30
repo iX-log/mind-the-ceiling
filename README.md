@@ -2,7 +2,9 @@
 
 *Your app gets a fixed slice of the phone. It is smaller than you think, and
 it does not grow when the phone does.*
+<details>
 
+<summary><strong>TL;DR</strong></summary><br>
 Before you put an AI model on an iPhone, you want to know:
 
 - **Speed**: how fast does it actually run?
@@ -12,9 +14,11 @@ Before you put an AI model on an iPhone, you want to know:
 
 This repo answers all four, measured on physical hardware, across quantization
 levels, using the Whisper-base encoder as the running example.
+</details>
+
 
 <details>
-<summary><strong>Huh? ELI5, please</strong></summary>
+<summary><strong>Huh? ELI5, please</strong></summary><br>
 The phone hands your app a fixed slice of memory and ends the process if you
 cross the line, and the same work gets slower the longer you keep doing it.
 None of that is written on the box, so this measures it on real phones, one
@@ -23,13 +27,10 @@ variable at a time.
 </details>
 
 <details>
-
-<summary><strong>The app</strong></summary>
+<summary><strong>The app</strong></summary><br>
 
 A small SwiftUI app you build and run on a physical device. The simulator has
 no Neural Engine, so latency and thermal numbers do not reproduce there.
-
-![The app running on an iPhone 17 Pro Max. The lower third is the whole interface: a precision picker set to fp16, a "Real input (LibriSpeech mel)" toggle, and the buttons Quick (100), Sustained (10 min), Dump features, Memory ceiling and Clear ceiling data. Above it, the output of a quick run: 1104.1 ms to load, 51.8 MB of model cost against 39.4 MB on disk, and a median of 26.2 ms over 100 inferences.](results/screenshots/iphone17promax-quick-fp16-cold.png)
 
 | Button | What it does | What you get |
 |---|---|---|
@@ -38,13 +39,16 @@ no Neural Engine, so latency and thermal numbers do not reproduce there.
 | **Memory ceiling** | Allocates 32MB blocks until iOS ends the process | `ceiling-progress.json`, fsynced after every block, because nothing survives the kill that wasn't already on disk |
 | **Dump features** | Writes the encoder's output for each audio window | `.bin` files you can score for accuracy or compare across devices |
 
-![The same app after a finished ten-minute run: 21,885 inferences over 600 seconds, a median of 27.5 ms, first minute 26.2 ms against last minute 28.0 ms for a drift of +1.8 ms, the thermal state moving from nominal to fair at 344.4 seconds, and the filename it wrote. Above that, the result of the last memory ceiling probe: 105 blocks allocated, 3375.7 MB of footprint, 0.3 MB left.](results/screenshots/iphone17promax-sustained-summary.png)
+<div style="display: flex; justify-content: space-between;">
+  <img src="results/screenshots/iphone17promax-quick-fp16-cold.png" width="33%">
+  <img src="results/screenshots/iphone17promax-sustained-summary.png" width="33%">
+</div>
 
 </details>
 
 <details>
 
-<summary><strong>Run the app</strong></summary>
+<summary><strong>Run the app</strong></summary><br>
 
 No Python needed: `fetch-models.sh` pulls the three converted models from this
 repo's release and puts them where Xcode expects them.
@@ -63,7 +67,7 @@ you did rather than this one.
 </details>
 
 <details>
-<summary><strong>Reproduce the published numbers</strong></summary>
+<summary><strong>Reproduce the published numbers</strong></summary><br>
 
 Converting the models yourself, scoring accuracy and regenerating the charts
 needs the Python side. Every command and its expected output is in
@@ -82,7 +86,7 @@ needs the Python side. Every command and its expected output is in
 </details>
 
 <details>
-<summary><strong>What we found</strong></summary>
+<summary><strong>What we found</strong></summary><br>
 
 | Measurement | Result | Session |
 |---|---|---|
@@ -101,7 +105,7 @@ What to do about each of these: [ADVICE.md](ADVICE.md).
 </details>
 
 <details>
-<summary><strong>Charts</strong></summary>
+<summary><strong>Charts</strong></summary><br>
 
 **The memory ceiling does not scale with RAM.** Two phones 4GB apart are cut off at the same byte.
 
@@ -126,7 +130,7 @@ What to do about each of these: [ADVICE.md](ADVICE.md).
 </details>
 
 <details>
-<summary><strong>Where to look next</strong></summary>
+<summary><strong>Where to look next</strong></summary><br>
 
 | File | What's in it |
 |---|---|
@@ -146,7 +150,7 @@ conditions and output.
 </details>
 
 <details>
-<summary><strong>License</strong></summary>
+<summary><strong>License</strong></summary><br>
 
 Code is [MIT](LICENSE). Measurement data under `results/` (raw JSON, charts,
 screenshots) is [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/):
@@ -160,7 +164,7 @@ cite this repo if you use the numbers.
 
 <details>
 
-<summary><strong>Author</strong></summary>
+<summary><strong>Author</strong></summary><br>
 
 Ixhen Hasani, [ix-dev.com](https://ix-dev.com)
 
