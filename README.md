@@ -3,8 +3,15 @@
 *Your app gets a fixed slice of the phone. It is smaller than you think, and
 it does not grow when the phone does.*
 
-What a Core ML model actually costs on an iPhone: memory, speed, endurance and
-accuracy, measured on physical devices and published with the raw data.
+Before you put an AI model on an iPhone, you want to know:
+
+- **Speed**: how fast does it actually run?
+- **Memory**: how much RAM does it really use?
+- **Endurance**: does it get slower the longer you run it?
+- **Accuracy**: what do you lose by shrinking the model?
+
+This repo answers all four, measured on physical hardware, across quantization
+levels, using the Whisper-base encoder as the running example.
 
 [![License: MIT](https://img.shields.io/badge/code-MIT-blue.svg)](LICENSE)
 [![Data: CC BY 4.0](https://img.shields.io/badge/data-CC--BY--4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
@@ -12,15 +19,10 @@ accuracy, measured on physical devices and published with the raw data.
 
 ## Explain it like I'm five
 
-You want your app to run an AI model on the phone instead of sending data to a
-server. Writing that code is the easy part. The hard part is what the phone
-does to you afterwards: it hands your app a fixed slice of memory and ends the
-process if you cross the line, and the same work gets slower the longer you
-keep doing it.
-
-None of that is written on the box. So this repo measures it on real phones,
-one small speech model, one variable at a time, and publishes every number
-with the conditions that produced it.
+The phone hands your app a fixed slice of memory and ends the process if you
+cross the line, and the same work gets slower the longer you keep doing it.
+None of that is written on the box, so this measures it on real phones, one
+variable at a time.
 
 ## The app
 
