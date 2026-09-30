@@ -31,8 +31,15 @@ levels, using the Whisper-base encoder as the running example.
 <details>
 <summary><strong>The app</strong></summary><br>
 
-A small SwiftUI app you build and run on a physical device. The simulator has
-no Neural Engine, so latency and thermal numbers do not reproduce there.
+A small SwiftUI app you build and run on a physical device.
+<div style="display: flex; justify-content: space-between;">
+  <img src="results/screenshots/iphone17promax-quick-fp16-cold.png" width="33%">
+  <img src="results/screenshots/iphone17promax-sustained-summary.png" width="33%">
+</div>
+
+---
+
+The simulator has no Neural Engine, so latency and thermal numbers do not reproduce there.
 
 | Button | What it does | What you get |
 |---|---|---|
@@ -41,10 +48,6 @@ no Neural Engine, so latency and thermal numbers do not reproduce there.
 | **Memory ceiling** | Allocates 32MB blocks until iOS ends the process | `ceiling-progress.json`, fsynced after every block, because nothing survives the kill that wasn't already on disk |
 | **Dump features** | Writes the encoder's output for each audio window | `.bin` files you can score for accuracy or compare across devices |
 
-<div style="display: flex; justify-content: space-between;">
-  <img src="results/screenshots/iphone17promax-quick-fp16-cold.png" width="33%">
-  <img src="results/screenshots/iphone17promax-sustained-summary.png" width="33%">
-</div>
 
 </details>
 
