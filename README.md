@@ -3,6 +3,10 @@
 *Your app gets a fixed slice of the phone. It is smaller than you think, and
 it does not grow when the phone does.*
 
+![Three iPhones drawn as horizontal tracks the width of their physical memory, each with the memory the app gets before iOS kills it filled in. The filled part is almost the same length on all three: 54% of the 5.9 GB iPhone 14 Pro Max, 44% of the 8.0 GB iPhone 16 Pro, and 29% of the 12.3 GB iPhone 17 Pro Max.](results/charts/fixed-slice.png)
+
+<sub>One plate, split three ways. <a href="https://youtu.be/N6As4FRpjtc?t=117">We have all seen how that goes</a>.</sub>
+
 Before you put an AI model on an iPhone, you want to know:
 
 - **Speed**: how fast does it actually run?
