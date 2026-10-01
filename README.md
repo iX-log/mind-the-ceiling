@@ -55,9 +55,14 @@ open ios/BenchApp/BenchApp.xcodeproj
 ```
 
 Pick a physical device in Xcode and run. The simulator has no Neural Engine, so
-latency and thermal numbers do not reproduce there. Airplane mode, off charger,
-and let the phone cool first, or the first minute of any run measures the last
-thing you did rather than this one.
+latency and thermal numbers do not reproduce there.
+
+For a run worth trusting:
+
+- **Airplane mode on.**
+- **Off the charger.**
+- **Let the phone cool down first**, or the first minute of any run measures the
+  last thing you did rather than this one.
 
 <details>
 <summary><strong>The app</strong></summary><br>
