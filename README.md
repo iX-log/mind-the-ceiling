@@ -1,10 +1,8 @@
-# mind-the-ceiling
+# Mind the ceiling
 
 *Your app gets a fixed slice of the phone. It is smaller than you think, and
 it does not grow when the phone does.*
-<details>
 
-<summary><strong>TL;DR</strong></summary><br>
 Before you put an AI model on an iPhone, you want to know:
 
 - **Speed**: how fast does it actually run?
@@ -14,11 +12,8 @@ Before you put an AI model on an iPhone, you want to know:
 
 This repo answers all four, measured on physical hardware, across quantization
 levels, using the Whisper-base encoder as the running example.
-</details>
 
-
-<details>
-<summary><strong>Huh? ELI5, please</strong></summary>
+**Huh? ELI5, please**
 
 * Your app only gets a limited amount of memory.
   * Use too much and iOS kills it.
@@ -26,34 +21,28 @@ levels, using the Whisper-base encoder as the running example.
 
 * This project measures both on real iPhones so you know what to expect.
 
-</details>
+## What we found
 
-<details>
-<summary><strong>The app</strong></summary><br>
-
-A small SwiftUI app you build and run on a physical device.
-<div style="display: flex; justify-content: space-between;">
-  <img src="results/screenshots/iphone17promax-quick-fp16-cold.png" width="33%">
-  <img src="results/screenshots/iphone17promax-sustained-summary.png" width="33%">
-</div>
-
----
-
-The simulator has no Neural Engine, so latency and thermal numbers do not reproduce there.
-
-| Button | What it does | What you get |
+| Measurement | Result | Measured on |
 |---|---|---|
-| **Quick (100)** | 100 inferences | Load time, model cost at load, median and p95 latency. On screen only, writes no file |
-| **Sustained (10 min)** | A 600-second loop | `sustained-*.json` with every sample's latency, footprint and thermal state |
-| **Memory ceiling** | Allocates 32MB blocks until iOS ends the process | `ceiling-progress.json`, fsynced after every block, because nothing survives the kill that wasn't already on disk |
-| **Dump features** | Writes the encoder's output for each audio window | `.bin` files you can score for accuracy or compare across devices |
+| Memory ceiling | 3376 MiB on an 8 GB phone and on a 12 GB one, the same integer. 3072 MiB on the 6 GB A16, 54% of what it reports | A16, A18 Pro, A19 Pro |
+| Ten-minute drift | +7% to +28% slower by the end. The shape differs per device: the A16 steps, the A19 and A19 Pro creep, the A18 Pro does both | A16, A18 Pro, A19, A19 Pro |
+| Quantization vs. memory | int4 was the smallest file (10.0 MB) and the largest at load (66.0 MB), against 51.8 MB for the 39.4 MB fp16 | A19 Pro |
+| Quantization vs. accuracy | Word error rate 3.4% fp16, 3.8% int8, 8.8% int4 | A16 |
+| Quantization vs. speed | 4x smaller on disk bought about 3% on latency | A16, A18 Pro |
+| Cold vs. warm load | 1002 to 2083 ms cold, 22 to 138 ms warm | A16, A18 Pro, A19 Pro |
+| Warm inference, 100 runs, fp16 | 43.0 ms median, 44.2 ms p95 | A16 |
+| Low Power Mode | +56% on the A16, +94% on the A19 Pro, and the spread about 16x wider | A16, A19 Pro |
 
+Conditions, per-session caveats and the raw data: [RESULTS.md](RESULTS.md).
+What to do about each of these: [ADVICE.md](ADVICE.md).
 
-</details>
+Four devices, one model, and several findings come from a single phone. Of ten
+findings published before the borrowed devices arrived, seven broke and three
+held: the full list is in [LIMITATIONS.md](LIMITATIONS.md). Treat every
+magnitude here as a starting point for your own measurement, not a constant.
 
-<details>
-
-<summary><strong>Run the app</strong></summary><br>
+## Run it
 
 No Python needed: `fetch-models.sh` pulls the three converted models from this
 repo's release and puts them where Xcode expects them.
@@ -65,9 +54,27 @@ scripts/fetch-models.sh
 open ios/BenchApp/BenchApp.xcodeproj
 ```
 
-Pick a physical device in Xcode and run. Airplane mode, off charger, and let
-the phone cool first, or the first minute of any run measures the last thing
-you did rather than this one.
+Pick a physical device in Xcode and run. The simulator has no Neural Engine, so
+latency and thermal numbers do not reproduce there. Airplane mode, off charger,
+and let the phone cool first, or the first minute of any run measures the last
+thing you did rather than this one.
+
+<details>
+<summary><strong>The app</strong></summary><br>
+
+A small SwiftUI app you build and run on a physical device.
+
+<div style="display: flex; justify-content: space-between;">
+  <img src="results/screenshots/iphone17promax-quick-fp16-cold.png" width="33%" alt="A quick run on an iPhone 17 Pro Max: a precision picker set to fp16, a real-input toggle, and the run buttons. Above them, 1104.1 ms to load, 51.8 MB of model cost against 39.4 MB on disk, and a median of 26.2 ms over 100 inferences.">
+  <img src="results/screenshots/iphone17promax-sustained-summary.png" width="33%" alt="A finished ten-minute run on the same phone: 21,885 inferences, a median of 27.5 ms, first minute 26.2 ms against last minute 28.0 ms, and the thermal state moving from nominal to fair at 344.4 seconds. Above it, the last memory ceiling probe: 105 blocks, 3375.7 MB of footprint, 0.3 MB left.">
+</div>
+
+| Button | What it does | What you get |
+|---|---|---|
+| **Quick (100)** | 100 inferences | Load time, model cost at load, median and p95 latency. On screen only, writes no file |
+| **Sustained (10 min)** | A 600-second loop | `sustained-*.json` with every sample's latency, footprint and thermal state |
+| **Memory ceiling** | Allocates 32MB blocks until iOS ends the process | `ceiling-progress.json`, fsynced after every block, because nothing survives the kill that wasn't already on disk |
+| **Dump features** | Writes the encoder's output for each audio window | `.bin` files you can score for accuracy or compare across devices |
 
 </details>
 
@@ -87,25 +94,6 @@ needs the Python side. Every command and its expected output is in
 7. **Pull the results off the device** with `scripts/pull-results.sh`, passing your own device UDID and bundle id.
 8. **Score accuracy** from a "Dump features" run.
 9. **Regenerate the charts** from the pulled JSON.
-
-</details>
-
-<details>
-<summary><strong>What we found</strong></summary><br>
-
-| Measurement | Result | Session |
-|---|---|---|
-| Memory ceiling before the process is killed | Fixed per device and does not scale with RAM: 3072 MiB on the A16 (54% of its reported 5.505 GiB), 3376 MiB on both the 8GB A18 Pro and the 12GB A19 Pro | 9, 11, 12 |
-| Sustained-run behaviour | Device-specific in shape: A16 steps, A19 and A19 Pro creep, A18 Pro steps then creeps. Final drift +7% to +28%, not monotonic with generation | 8, 10, 11, 12 |
-| Quantization vs. memory | The 10MB int4 model cost 66MB at cold load, against 51.8MB for the 39MB fp16 model | 12 |
-| Quantization vs. accuracy | WER 3.4% (fp16), 3.8% (int8), 8.8% (int4) | 7 |
-| Quantization vs. speed | int4 is 4x smaller than fp16 but only ~3% faster (likely compute-bound, not confirmed with a layer trace) | 5 |
-| Load time, cold vs. warm | 1002-2083ms cold, 22-138ms warm | 1-6, 11, 12 |
-| Steady-state inference | 43.0ms median, 44.2ms p95 (100 runs) | 6 |
-| Low Power Mode | +56% on the A16, +94% on the A19 Pro, and 16x wider latency spread | 3, 12 |
-
-Conditions, per-session caveats and the raw data: [RESULTS.md](RESULTS.md).
-What to do about each of these: [ADVICE.md](ADVICE.md).
 
 </details>
 
@@ -144,18 +132,13 @@ What to do about each of these: [ADVICE.md](ADVICE.md).
 | [LIMITATIONS.md](LIMITATIONS.md) | What this does not establish |
 | [REPRODUCING.md](REPRODUCING.md) | Setup and the full protocol |
 
-Four devices, one model, and several findings come from a single phone. Of ten
-findings published before the borrowed devices arrived, seven broke and three
-held: the full list is in [LIMITATIONS.md](LIMITATIONS.md). Treat every
-magnitude here as a starting point for your own measurement, not a constant.
-
 If a number doesn't reproduce on your run, please open an issue with your
 conditions and output.
 
 </details>
 
 <details>
-<summary><strong>License</strong></summary><br>
+<summary><strong>License and author</strong></summary><br>
 
 Code is [MIT](LICENSE). Measurement data under `results/` (raw JSON, charts,
 screenshots) is [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/):
@@ -164,12 +147,6 @@ cite this repo if you use the numbers.
 [![License: MIT](https://img.shields.io/badge/code-MIT-blue.svg)](LICENSE)
 [![Data: CC BY 4.0](https://img.shields.io/badge/data-CC--BY--4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![Platform: Core ML / iOS](https://img.shields.io/badge/platform-Core%20ML%20%2F%20iOS-black.svg)](REPRODUCING.md)
-
-</details>
-
-<details>
-
-<summary><strong>Author</strong></summary><br>
 
 Ixhen Hasani, [ix-dev.com](https://ix-dev.com)
 
