@@ -42,6 +42,26 @@ levels, using the [Whisper-base](https://huggingface.co/openai/whisper-base) enc
 
 Use these as a starting point for measuring your own app, not as numbers you can rely on.
 
+## The app
+
+A small SwiftUI app you build and run on a physical device. Four buttons, one
+for each of the questions above.
+
+| Button | ELI5 | What it does | What you get |
+|---|---|---|---|
+| **Quick (100)** | How fast is it right now? | 100 inferences | Load time, model cost at load, median and p95 latency. On screen only, writes no file |
+| **Sustained (10 min)** | Does it stay fast for ten minutes? | A 600-second loop | `sustained-*.json` with every sample's latency, footprint and thermal state |
+| **Memory ceiling** | How much can it use before iOS kills it? | Allocates 32MB blocks until iOS ends the process | `ceiling-progress.json`, fsynced after every block, because nothing survives the kill that wasn't already on disk |
+| **Dump features** | Did shrinking the model break the answers? | Writes the encoder's output for each audio window | `.bin` files you can score for accuracy or compare across devices |
+
+<p align="center">
+  <img src="results/screenshots/readme/iphone17promax-quick-fp16-cold.png" width="42%" alt="A quick run on an iPhone 17 Pro Max: 1104.1 ms to load, 51.8 MB of model cost against 39.4 MB on disk, and a median of 26.2 ms over 100 inferences. Below, the precision picker, the real-input toggle and the five buttons.">
+  <img src="results/screenshots/readme/iphone17promax-sustained-summary.png" width="42%" alt="A finished ten-minute run on the same phone: 21,885 inferences, a median of 27.5 ms, first minute 26.2 ms against last minute 28.0 ms, and the thermal state moving from nominal to fair at 344.4 seconds. Above it, the last memory ceiling probe: 105 blocks, 3375.7 MB of footprint, 0.3 MB left.">
+</p>
+
+<sub>Screenshots are the committed originals in <code>results/screenshots/</code> with their blank
+bands collapsed by <code>analysis/make_readme_crops.py</code>. Nothing else is altered.</sub>
+
 ## Run it
 
 No Python needed: `fetch-models.sh` pulls the three converted models from this
@@ -58,25 +78,6 @@ Pick a physical device in Xcode and run. The simulator has no Neural Engine, so
 latency and thermal numbers do not reproduce there. Airplane mode, off charger,
 and let the phone cool first, or the first minute of any run measures the last
 thing you did rather than this one.
-
-<details>
-<summary><strong>The app</strong></summary><br>
-
-A small SwiftUI app you build and run on a physical device.
-
-<div style="display: flex; justify-content: space-between;">
-  <img src="results/screenshots/iphone17promax-quick-fp16-cold.png" width="33%" alt="A quick run on an iPhone 17 Pro Max: a precision picker set to fp16, a real-input toggle, and the run buttons. Above them, 1104.1 ms to load, 51.8 MB of model cost against 39.4 MB on disk, and a median of 26.2 ms over 100 inferences.">
-  <img src="results/screenshots/iphone17promax-sustained-summary.png" width="33%" alt="A finished ten-minute run on the same phone: 21,885 inferences, a median of 27.5 ms, first minute 26.2 ms against last minute 28.0 ms, and the thermal state moving from nominal to fair at 344.4 seconds. Above it, the last memory ceiling probe: 105 blocks, 3375.7 MB of footprint, 0.3 MB left.">
-</div>
-
-| Button | What it does | What you get |
-|---|---|---|
-| **Quick (100)** | 100 inferences | Load time, model cost at load, median and p95 latency. On screen only, writes no file |
-| **Sustained (10 min)** | A 600-second loop | `sustained-*.json` with every sample's latency, footprint and thermal state |
-| **Memory ceiling** | Allocates 32MB blocks until iOS ends the process | `ceiling-progress.json`, fsynced after every block, because nothing survives the kill that wasn't already on disk |
-| **Dump features** | Writes the encoder's output for each audio window | `.bin` files you can score for accuracy or compare across devices |
-
-</details>
 
 <details>
 <summary><strong>Reproduce the published numbers</strong></summary><br>
