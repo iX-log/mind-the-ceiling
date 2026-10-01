@@ -65,26 +65,27 @@ def blank_bands(mask, minimum=1):
         row = end
 
 
-def collapse(arr):
-    """Shorten every blank band longer than MIN_RUN_PX down to KEEP_PX."""
-    keep = np.ones(len(arr), dtype=bool)
-    for start, end in blank_bands(blank_rows(arr), MIN_RUN_PX + 1):
-        keep[start + KEEP_PX // 2 : end - KEEP_PX // 2] = False
-    return arr[np.flatnonzero(keep)]
+def collapse(arr, extra=0):
+    """Shorten every blank band longer than MIN_RUN_PX down to KEEP_PX.
 
-
-def pad_to(arr, height):
-    """Grow arr to `height` by repeating a row from its largest blank band."""
-    missing = height - len(arr)
-    if missing <= 0:
-        return arr
-    bands = sorted(blank_bands(blank_rows(arr)), key=lambda b: b[1] - b[0])
+    `extra` rows are left in the band that was largest in the source, which is
+    how the two screenshots are brought to a common height: the space goes
+    back into the gap it was taken from, rather than onto the top margin
+    (which shifts the whole screen down) or into some other gap the app only
+    ever drew a few pixels of.
+    """
+    bands = list(blank_bands(blank_rows(arr), MIN_RUN_PX + 1))
     if not bands:
-        raise ValueError("no blank band to pad into")
-    start, end = bands[-1]
-    at = (start + end) // 2
-    filler = np.repeat(arr[at : at + 1], missing, axis=0)
-    return np.concatenate([arr[:at], filler, arr[at:]])
+        return arr
+    largest = max(bands, key=lambda b: b[1] - b[0])
+
+    keep = np.ones(len(arr), dtype=bool)
+    for start, end in bands:
+        hold = KEEP_PX + (extra if (start, end) == largest else 0)
+        cut_from, cut_to = start + hold // 2, end - (hold - hold // 2)
+        if cut_to > cut_from:
+            keep[cut_from:cut_to] = False
+    return arr[np.flatnonzero(keep)]
 
 
 def main():
@@ -94,8 +95,8 @@ def main():
     collapsed = {n: collapse(a) for n, a in sources.items()}
     target = max(len(a) for a in collapsed.values())
 
-    for name, arr in collapsed.items():
-        out = pad_to(arr, target)
+    for name in SCREENSHOTS:
+        out = collapse(sources[name], extra=target - len(collapsed[name]))
         Image.fromarray(out).save(os.path.join(OUT_DIR, name))
         original = len(sources[name])
         print(
