@@ -77,8 +77,7 @@ for each of the questions above.
   <img src="results/screenshots/readme/iphone17promax-sustained-summary.png" width="42%" alt="A finished ten-minute run on the same phone: 21,885 inferences, a median of 27.5 ms, first minute 26.2 ms against last minute 28.0 ms, and the thermal state moving from nominal to fair at 344.4 seconds. Above it, the last memory ceiling probe: 105 blocks, 3375.7 MB of footprint, 0.3 MB left.">
 </p>
 
-*These are the real screenshots from `results/screenshots/`, with the empty
-middle of the screen trimmed out so they fit on the page.*
+*screenshots from `results/screenshots/`*
 
 </details>
 
