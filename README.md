@@ -1,6 +1,6 @@
 # Mind the ceiling
 
-*Your app gets a fixed slice of the phone. It is smaller than you think, <a href="https://youtu.be/N6As4FRpjtc?t=117">and it does not grow when the phone does</a>.* 
+*Your app gets a fixed slice of the phone. It is smaller than you think, <a href="https://youtu.be/N6As4FRpjtc?t=117" target="_blank" rel="noopener noreferrer">and it does not grow when the phone does</a>.* 
 
 ![Three iPhones drawn side by side, each the height of the memory it reports, with the memory the app gets before iOS kills it filled in at the bottom. The phones grow from 5.9 GB to 8.0 GB to 12.3 GB; the filled part stays the same size, at 54%, 44% and 29%.](results/charts/hero.png)
 
