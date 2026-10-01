@@ -23,24 +23,24 @@ levels, using the [Whisper-base](https://huggingface.co/openai/whisper-base) enc
 
 ## What we found
 
-| Measurement | Result | Measured on |
-|---|---|---|
-| Memory ceiling | 3376 MiB on an 8 GB phone and on a 12 GB one, the same integer. 3072 MiB on the 6 GB A16, 54% of what it reports | A16, A18 Pro, A19 Pro |
-| Ten-minute drift | +7% to +28% slower by the end. The shape differs per device: the A16 steps, the A19 and A19 Pro creep, the A18 Pro does both | A16, A18 Pro, A19, A19 Pro |
-| Quantization vs. memory | int4 was the smallest file (10.0 MB) and the largest at load (66.0 MB), against 51.8 MB for the 39.4 MB fp16 | A19 Pro |
-| Quantization vs. accuracy | Word error rate 3.4% fp16, 3.8% int8, 8.8% int4 | A16 |
-| Quantization vs. speed | 4x smaller on disk bought about 3% on latency | A16, A18 Pro |
-| Cold vs. warm load | 1002 to 2083 ms cold, 22 to 138 ms warm | A16, A18 Pro, A19 Pro |
-| Warm inference, 100 runs, fp16 | 43.0 ms median, 44.2 ms p95 | A16 |
-| Low Power Mode | +56% on the A16, +94% on the A19 Pro, and the spread about 16x wider | A16, A19 Pro |
+| Measurement | Result | ELI5 | Measured on |
+|---|---|---|---|
+| Memory ceiling | 3376 MiB on an 8 GB phone and on a 12 GB one, the same integer. 3072 MiB on the 6 GB A16, 54% of what it reports | You cannot assume a bigger phone gives your app more room | A16, A18 Pro, A19 Pro |
+| Ten-minute drift | +7% to +28% slower by the end. The shape differs per device: the A16 steps, the A19 and A19 Pro creep, the A18 Pro does both | The longer it runs, the slower it gets, and how much depends on the phone | A16, A18 Pro, A19, A19 Pro |
+| Quantization vs. memory | int4 was the smallest file (10.0 MB) and the largest at load (66.0 MB), against 51.8 MB for the 39.4 MB fp16 | A smaller download can still take more memory once it is running | A19 Pro |
+| Quantization vs. accuracy | Word error rate 3.4% fp16, 3.8% int8, 8.8% int4 | Shrink the model too far and it starts mishearing words | A16 |
+| Quantization vs. speed | 4x smaller on disk bought about 3% on latency | Shrinking the model barely makes it faster | A16, A18 Pro |
+| Cold vs. warm load | 1002 to 2083 ms cold, 22 to 138 ms warm | The first load is slow. Every load after that is quick | A16, A18 Pro, A19 Pro |
+| Warm inference, 100 runs, fp16 | 43.0 ms median, 44.2 ms p95 | Once warmed up, encoding a 30-second window takes about 43 ms | A16 |
+| Low Power Mode | +56% on the A16, +94% on the A19 Pro, and the spread about 16x wider | In Low Power Mode it is much slower, and far less predictable | A16, A19 Pro |
 
-Conditions, per-session caveats and the raw data: [RESULTS.md](RESULTS.md).
-What to do about each of these: [ADVICE.md](ADVICE.md).
+**Where to go next**
 
-Four devices, one model, and several findings come from a single phone. Of ten
-findings published before the borrowed devices arrived, seven broke and three
-held: the full list is in [LIMITATIONS.md](LIMITATIONS.md). Treat every
-magnitude here as a starting point for your own measurement, not a constant.
+- **The numbers behind all this**: every run, the exact conditions, and the raw files are in [RESULTS.md](RESULTS.md).
+- **What to actually do about it** in your own app: [ADVICE.md](ADVICE.md).
+- **How much should you trust this?** Four phones, one model, and some of these numbers come from a single phone. Of the ten things we thought we had found before the other devices arrived, seven turned out to be wrong once we tested them elsewhere. The list is in [LIMITATIONS.md](LIMITATIONS.md).
+
+Use these as a starting point for measuring your own app, not as numbers you can rely on.
 
 ## Run it
 
