@@ -17,13 +17,16 @@ Before you put an AI model on an iPhone, you want to know:
 This repo answers all four, measured on physical hardware, across quantization
 levels, using the [Whisper-base](https://huggingface.co/openai/whisper-base) encoder as the running example.
 
-**Huh? ELI5, please**
+<details>
+<summary><strong>Huh? ELI5, please</strong></summary><br>
 
 * Your app only gets a limited amount of memory.
   * Use too much and iOS kills it.
   * Run the same AI model for long enough and it can also start slowing down.
 
 * This project measures both on real iPhones so you know what to expect.
+
+</details>
 
 <details>
 <summary><strong>What we found</strong></summary><br>
