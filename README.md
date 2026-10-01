@@ -21,7 +21,8 @@ levels, using the [Whisper-base](https://huggingface.co/openai/whisper-base) enc
 
 * This project measures both on real iPhones so you know what to expect.
 
-## What we found
+<details>
+<summary><strong>What we found</strong></summary><br>
 
 | Measurement | Result | ELI5 | Measured on |
 |---|---|---|---|
@@ -42,7 +43,10 @@ levels, using the [Whisper-base](https://huggingface.co/openai/whisper-base) enc
 
 Use these as a starting point for measuring your own app, not as numbers you can rely on.
 
-## Run it
+</details>
+
+<details>
+<summary><strong>Run it</strong></summary><br>
 
 No Python needed: `fetch-models.sh` pulls the three converted models from this
 repo's release and puts them where Xcode expects them.
@@ -63,6 +67,8 @@ For a run worth trusting:
 - **Off the charger.**
 - **Let the phone cool down first**, or the first minute of any run measures the
   last thing you did rather than this one.
+
+</details>
 
 <details>
 <summary><strong>The app</strong></summary><br>
