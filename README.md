@@ -11,7 +11,7 @@ Before you put an AI model on an iPhone, you want to know:
 - **Accuracy**: what do you lose by shrinking the model?
 
 This repo answers all four, measured on physical hardware, across quantization
-levels, using the Whisper-base encoder as the running example.
+levels, using the [Whisper-base](https://huggingface.co/openai/whisper-base) encoder as the running example.
 
 **Huh? ELI5, please**
 
@@ -85,8 +85,8 @@ Converting the models yourself, scoring accuracy and regenerating the charts
 needs the Python side. Every command and its expected output is in
 [REPRODUCING.md](REPRODUCING.md); this is the shape of it.
 
-1. **Convert the model** on a Mac. Traces the Whisper encoder, converts to Core ML, applies int8 and int4 quantization. Prints a numeric check against the PyTorch original.
-2. **Prepare audio fixtures** from LibriSpeech test-clean, unpacked for latency and packed into 30-second windows for accuracy.
+1. **Convert the model** on a Mac. Traces the Whisper encoder, converts to [Core ML](https://developer.apple.com/documentation/CoreML), applies int8 and int4 quantization. Prints a numeric check against the PyTorch original.
+2. **Prepare audio fixtures** from [LibriSpeech test-clean](https://huggingface.co/datasets/openslr/librispeech_asr), unpacked for latency and packed into 30-second windows for accuracy.
 3. **Export the fixtures to raw `.bin`** for the iOS app.
 4. **Copy the models into the Xcode folder**, which `fetch-models.sh` already did if you used it.
 5. **Build and run on a physical device.** The simulator has no Neural Engine.
