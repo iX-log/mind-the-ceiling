@@ -80,9 +80,9 @@ for each of the questions above.
 <p align="center">
   <img src="results/screenshots/readme/iphone17promax-quick-fp16-cold.png" width="42%" alt="A quick run on an iPhone 17 Pro Max: 1104.1 ms to load, 51.8 MB of model cost against 39.4 MB on disk, and a median of 26.2 ms over 100 inferences. Below, the precision picker, the real-input toggle and the five buttons.">
   <img src="results/screenshots/readme/iphone17promax-sustained-summary.png" width="42%" alt="A finished ten-minute run on the same phone: 21,885 inferences, a median of 27.5 ms, first minute 26.2 ms against last minute 28.0 ms, and the thermal state moving from nominal to fair at 344.4 seconds. Above it, the last memory ceiling probe: 105 blocks, 3375.7 MB of footprint, 0.3 MB left.">
+  <br>
+  <sub><em>From screenshots from <code>results/screenshots/</code></em></sub>
 </p>
-
-*screenshots from `results/screenshots/`*
 
 </details>
 
