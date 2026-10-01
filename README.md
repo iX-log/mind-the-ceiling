@@ -108,25 +108,25 @@ needs the Python side. Every command and its expected output is in
 <details>
 <summary><strong>Charts</strong></summary><br>
 
-**The memory ceiling does not scale with RAM.** Two phones 4GB apart are cut off at the same byte.
+1. **The memory ceiling does not scale with RAM.** Two phones 4GB apart are cut off at the same byte.
 
-![Horizontal bar chart comparing three iPhones. Blue bars show physical memory as each device reports it. Orange bars show the memory the app gets before it is killed: 3,221,225,472 bytes on the A16, and the identical 3,539,992,576 bytes on both the A18 Pro and the A19 Pro.](results/charts/ceiling-vs-ram.png)
+    ![Horizontal bar chart comparing three iPhones. Blue bars show physical memory as each device reports it. Orange bars show the memory the app gets before it is killed: 3,221,225,472 bytes on the A16, and the identical 3,539,992,576 bytes on both the A18 Pro and the A19 Pro.](results/charts/ceiling-vs-ram.png)
 
-**Ten minutes of steady work, seven runs, four devices.** Each run normalised to its own first minute, so the lines show slowdown rather than speed.
+2. **Ten minutes of steady work, seven runs, four devices.** Each run normalised to its own first minute, so the lines show slowdown rather than speed.
 
-![Seven sustained runs normalised to each run's own first-minute median, plotted as percent slower over 600 seconds.](results/charts/cross-device-normalised.png)
+    ![Seven sustained runs normalised to each run's own first-minute median, plotted as percent slower over 600 seconds.](results/charts/cross-device-normalised.png)
 
-**Quantization shrinks the file, not the memory.** The smallest model on disk had the largest resident cost.
+3. **Quantization shrinks the file, not the memory.** The smallest model on disk had the largest resident cost.
 
-![Grouped bar chart across fp16, int8 and int4 on the iPhone 17 Pro Max. Size on disk descends from 39.4 MB to 19.8 MB to 10.0 MB. Memory at first load does not follow: 51.8 MB, 34.1 MB, 66.0 MB.](results/charts/quantization-memory.png)
+    ![Grouped bar chart across fp16, int8 and int4 on the iPhone 17 Pro Max. Size on disk descends from 39.4 MB to 19.8 MB to 10.0 MB. Memory at first load does not follow: 51.8 MB, 34.1 MB, 66.0 MB.](results/charts/quantization-memory.png)
 
-**int8 is close to free. int4 is not.** Half the size for 0.4 points of word error rate, then 2.6x the errors for the next halving.
+4. **int8 is close to free. int4 is not.** Half the size for 0.4 points of word error rate, then 2.6x the errors for the next halving.
 
-![Bar chart of disk size against a line of aggregate WER across fp16, int8, and int4.](results/charts/quantization-tradeoff.png)
+    ![Bar chart of disk size against a line of aggregate WER across fp16, int8, and int4.](results/charts/quantization-tradeoff.png)
 
-**Low Power Mode changes the shape of the distribution.** The spread widens about sixteen times, so a median tells you almost nothing.
+5. **Low Power Mode changes the shape of the distribution.** The spread widens about sixteen times, so a median tells you almost nothing.
 
-![Range chart of 100 inference runs in each of two conditions on the iPhone 17 Pro Max. Normal mode spans 26.0 to 27.3 ms. Low Power Mode spans 39.5 to 60.9 ms.](results/charts/low-power-spread.png)
+    ![Range chart of 100 inference runs in each of two conditions on the iPhone 17 Pro Max. Normal mode spans 26.0 to 27.3 ms. Low Power Mode spans 39.5 to 60.9 ms.](results/charts/low-power-spread.png)
 
 </details>
 
