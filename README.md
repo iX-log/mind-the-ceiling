@@ -1,9 +1,9 @@
+![Three iPhones drawn side by side, each the height of the memory it reports, with the memory the app gets before iOS kills it filled in at the bottom. The phones grow from 5.9 GB to 8.0 GB to 12.3 GB; the filled part stays the same size, at 54%, 44% and 29%.](results/charts/hero.png)
+
 # Mind the ceiling
 
 *Your app gets a fixed slice of the phone. It is smaller than you think, and
 it does not grow when the phone does.*
-
-![Three iPhones drawn as horizontal tracks the width of their physical memory, each with the memory the app gets before iOS kills it filled in. The filled part is almost the same length on all three: 54% of the 5.9 GB iPhone 14 Pro Max, 44% of the 8.0 GB iPhone 16 Pro, and 29% of the 12.3 GB iPhone 17 Pro Max.](results/charts/fixed-slice.png)
 
 <sub>One plate, split three ways. <a href="https://youtu.be/N6As4FRpjtc?t=117">We have all seen how that goes</a>.</sub>
 
